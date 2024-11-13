@@ -1,0 +1,22 @@
+default: &default
+    adapter: postgresql
+    host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
+    username: <%= ENV['DATABASE_USERNAME'] || nil %>
+    password: <%= ENV['DATABASE_PASSWORD'] %>
+    encoding: unicode
+
+development:
+    <<: *default
+    database: <%= ENV['DATABASE_NAME'] || 'courses_development' %>
+
+test:
+    <<: *default
+    database: courses_test
+
+production:
+    <<: *default
+    database: <%= ENV['DATABASE_NAME'] %>
+    username: <%= ENV['DATABASE_USERNAME'] %>
+    password: <%= ENV['DATABASE_PASSWORD'] %>
+    host: <%= ENV['DATABASE_HOST'] %>
+    port: <%= ENV['DATABASE_PORT'] %>
