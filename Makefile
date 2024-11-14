@@ -7,8 +7,10 @@ bash:
 up:
 	docker-compose up
 
-swaggerize:
-	docker-compose run --rm web rails rswag:specs:swaggerize
+rubocop:
+	docker-compose run --rm web bundle exec rubocop -a
 
 rswag:
 	docker-compose run --rm web rails rswag
+
+
