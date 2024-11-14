@@ -6,3 +6,9 @@ bash:
 
 up:
 	docker-compose up
+
+swaggerize:
+	docker-compose run --rm web rails rswag:specs:swaggerize
+
+rswag:
+	docker-compose run --rm web rails rswag

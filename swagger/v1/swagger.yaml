@@ -1,0 +1,101 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/authors":
+    get:
+      summary: Retrieves all authors
+      tags:
+      - Authors
+      responses:
+        '200':
+          description: authors found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Author"
+    post:
+      summary: Creates an author
+      tags:
+      - Authors
+      parameters: []
+      responses:
+        '201':
+          description: author created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+  "/api/v1/authors/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Retrieves an author
+      tags:
+      - Authors
+      responses:
+        '200':
+          description: author found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Author"
+        '404':
+          description: author not found
+    put:
+      summary: Updates an author
+      tags:
+      - Authors
+      parameters: []
+      responses:
+        '200':
+          description: author updated
+        '404':
+          description: author not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+    delete:
+      summary: Deletes an author
+      tags:
+      - Authors
+      responses:
+        '204':
+          description: author deleted
+        '404':
+          description: author not found
+components:
+  schemas:
+    Author:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+      - id
+      - name
