@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-RSpec.describe 'api/v1/authors', type: :request do
+RSpec.describe('api/v1/authors', type: :request) do
   path '/api/v1/authors' do
     get 'Retrieves all authors' do
       tags 'Authors'

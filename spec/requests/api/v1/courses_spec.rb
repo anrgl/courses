@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-RSpec.describe 'api/v1/courses', type: :request do
+RSpec.describe('api/v1/courses', type: :request) do
   path '/api/v1/courses' do
     get 'Retrieves all courses' do
       tags 'Courses'
