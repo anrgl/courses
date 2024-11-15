@@ -13,4 +13,5 @@ rubocop:
 rswag:
 	docker-compose run --rm web rails rswag
 
-
+tests:
+	docker-compose run --rm web rails spec

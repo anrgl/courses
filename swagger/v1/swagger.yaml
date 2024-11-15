@@ -87,6 +87,94 @@ paths:
           description: author deleted
         '404':
           description: author not found
+  "/api/v1/courses":
+    get:
+      summary: Retrieves all courses
+      tags:
+      - Courses
+      responses:
+        '200':
+          description: courses found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Course"
+    post:
+      summary: Creates an course
+      tags:
+      - Courses
+      parameters: []
+      responses:
+        '201':
+          description: course created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                author_id:
+                  type: integer
+              required:
+              - title
+              - author_id
+  "/api/v1/courses/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Retrieves an course
+      tags:
+      - Courses
+      responses:
+        '200':
+          description: course found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Course"
+        '404':
+          description: course not found
+    put:
+      summary: Updates an course
+      tags:
+      - Courses
+      parameters: []
+      responses:
+        '200':
+          description: course updated
+        '404':
+          description: course not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                author_id:
+                  type: integer
+              required:
+              - title
+    delete:
+      summary: Deletes an course
+      tags:
+      - Courses
+      responses:
+        '204':
+          description: course deleted
+        '404':
+          description: course not found
 components:
   schemas:
     Author:
@@ -99,3 +187,16 @@ components:
       required:
       - id
       - name
+    Course:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        author_id:
+          type: integer
+      required:
+      - id
+      - title
+      - author_id

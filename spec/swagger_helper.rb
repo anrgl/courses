@@ -32,6 +32,15 @@ RSpec.configure do |config|
                 name: { type: :string }
               },
               required: [ 'id', 'name' ]
+            },
+            Course: {
+              type: :object,
+              properties: {
+                id: { type: :integer },
+                title: { type: :string },
+                author_id: { type: :integer }
+              },
+              required: [ 'id', 'title', 'author_id' ]
             }
           }
         }
