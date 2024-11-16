@@ -38,9 +38,21 @@ RSpec.configure do |config|
               properties: {
                 id: { type: :integer },
                 title: { type: :string },
-                author_id: { type: :integer }
+                author_id: { type: :integer },
+                competences: {
+                  type: :array,
+                  items: { type: :string }
+                }
               },
               required: [ 'id', 'title', 'author_id' ]
+            },
+            Competence: {
+              type: :object,
+              properties: {
+                id: { type: :integer },
+                title: { type: :string }
+              },
+              required: [ 'id', 'title' ]
             }
           }
         }

@@ -24,20 +24,30 @@ RSpec.describe('api/v1/courses', type: :request) do
       parameter name: :course, in: :body, schema: {
         type: :object,
         properties: {
-          title: { type: :string },
-          author_id: { type: :integer }
+          course: {
+            type: :object,
+            properties: {
+              title: { type: :string },
+              author_id: { type: :integer },
+              competences: {
+                type: :array,
+                items: { type: :string }
+              }
+            },
+            required: [ 'title', 'author_id' ]
+          },
         },
-        required: [ 'title', 'author_id' ]
+        required: [ 'course' ]
       }
 
       response '201', 'course created' do
         let(:author) { create(:author) }
-        let(:course) { { title: Faker::Name.name, author_id: author.id } }
+        let(:course) { { course: { title: Faker::Name.name, author_id: author.id, competences: [ 'competence1', 'competence2' ] } } }
         run_test!
       end
 
       response '422', 'invalid request' do
-        let(:course) { { title: '' } }
+        let!(:course) { { course: { title: '', competences: [] } } }
         run_test!
       end
     end

@@ -12,7 +12,13 @@ class Api::V1::CoursesController < Api::V1::ApplicationController
   end
 
   def create
-    course = Course.new(course_params)
+    course = Course.new(title: course_params[:title], author_id: course_params[:author_id])
+    competences = course_params[:competences].map do |competence_title|
+      Competence.find_or_create_by(title: competence_title)
+    end
+
+    course.competences = competences
+
     course.save
 
     respond_with course, serializer: CourseSerializer
@@ -35,6 +41,6 @@ class Api::V1::CoursesController < Api::V1::ApplicationController
   private
 
   def course_params
-    params.require(:course).permit(:title, :author_id)
+    params.require(:course).permit(:title, :author_id, competences: [])
   end
 end

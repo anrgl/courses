@@ -87,6 +87,89 @@ paths:
           description: author deleted
         '404':
           description: author not found
+  "/api/v1/competences":
+    get:
+      summary: Retrieves all competences
+      tags:
+      - Competences
+      responses:
+        '200':
+          description: competences found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Competence"
+    post:
+      summary: Creates an competence
+      tags:
+      - Competences
+      parameters: []
+      responses:
+        '201':
+          description: competence created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+              required:
+              - title
+  "/api/v1/competences/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Retrieves an competence
+      tags:
+      - Competences
+      responses:
+        '200':
+          description: competence found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Competence"
+        '404':
+          description: competence not found
+    put:
+      summary: Updates an competence
+      tags:
+      - Competences
+      parameters: []
+      responses:
+        '200':
+          description: competence updated
+        '404':
+          description: competence not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+              required:
+              - title
+    delete:
+      summary: Deletes an competence
+      tags:
+      - Competences
+      responses:
+        '204':
+          description: competence deleted
+        '404':
+          description: competence not found
   "/api/v1/courses":
     get:
       summary: Retrieves all courses
@@ -117,13 +200,22 @@ paths:
             schema:
               type: object
               properties:
-                title:
-                  type: string
-                author_id:
-                  type: integer
+                course:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    author_id:
+                      type: integer
+                    competences:
+                      type: array
+                      items:
+                        type: string
+                  required:
+                  - title
+                  - author_id
               required:
-              - title
-              - author_id
+              - course
   "/api/v1/courses/{id}":
     parameters:
     - name: id
@@ -196,7 +288,21 @@ components:
           type: string
         author_id:
           type: integer
+        competences:
+          type: array
+          items:
+            type: string
       required:
       - id
       - title
       - author_id
+    Competence:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+      required:
+      - id
+      - title
