@@ -109,11 +109,22 @@ RSpec.describe('api/v1/authors', type: :request) do
     delete 'Deletes an author' do
       tags 'Authors'
 
-      response '204', 'author deleted' do
+      response '204', 'delete author' do
+        before do
+          create_list(:author, 5)
+        end
+        let(:id) { Author.last.id }
+        run_test! do |response|
+          expect(Author.count).to eq(4)
+          expect(Author.pluck(:id)).not_to include(id)
+        end
+      end
+
+      response '422', 'try delete last author' do
         let(:id) { create(:author).id }
         run_test! do |response|
-          expect(response.status).to eq(204)
-          expect(response.body).to be_empty
+          data = JSON.parse(response.body)
+          expect(data['errors']).to include('base')
         end
       end
 

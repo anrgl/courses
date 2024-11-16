@@ -4,7 +4,7 @@ build:
 bash:
 	docker-compose run --rm web /bin/bash
 
-up:
+app:
 	docker-compose up
 
 rubocop:
@@ -15,3 +15,6 @@ rswag:
 
 tests:
 	docker-compose run --rm web rails spec
+
+console:
+	docker-compose run --rm web rails c

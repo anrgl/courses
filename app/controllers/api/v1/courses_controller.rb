@@ -35,7 +35,7 @@ class Api::V1::CoursesController < Api::V1::ApplicationController
     course = Course.find(params[:id])
     course.destroy
 
-    head :no_content
+    respond_with course, serializer: CourseSerializer
   end
 
   private
