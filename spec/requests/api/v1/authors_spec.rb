@@ -14,7 +14,10 @@ RSpec.describe('api/v1/authors', type: :request) do
           create_list(:author, 5)
         end
 
-        run_test!
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data.count).to eq(5)
+        end
       end
     end
 
@@ -30,13 +33,20 @@ RSpec.describe('api/v1/authors', type: :request) do
       }
 
       response '201', 'author created' do
-        let(:author) { { name: Faker::Name.name } }
-        run_test!
+        let(:name) { Faker::Name.name }
+        let(:author) { { name: name } }
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data['name']).to eq(name)
+        end
       end
 
       response '422', 'invalid request' do
         let(:author) { { name: '' } }
-        run_test!
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data['errors']).to include('name')
+        end
       end
     end
   end
@@ -52,12 +62,17 @@ RSpec.describe('api/v1/authors', type: :request) do
         schema '$ref' => '#/components/schemas/Author'
 
         let(:id) { create(:author).id }
-        run_test!
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data['id']).to eq(id)
+        end
       end
 
       response '404', 'author not found' do
         let(:id) { 'invalid' }
-        run_test!
+        run_test! do |response|
+          expect(response.status).to eq(404)
+        end
       end
     end
 
@@ -74,14 +89,20 @@ RSpec.describe('api/v1/authors', type: :request) do
 
       response '200', 'author updated' do
         let(:id) { create(:author).id }
-        let(:author) { { name: Faker::Name.name } }
-        run_test!
+        let(:name) { Faker::Name.name }
+        let(:author) { { name: name } }
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data['name']).to eq(name)
+        end
       end
 
       response '404', 'author not found' do
         let(:id) { 'invalid' }
         let(:author) { { name: Faker::Name.name } }
-        run_test!
+        run_test! do |response|
+          expect(response.status).to eq(404)
+        end
       end
     end
 
@@ -90,12 +111,17 @@ RSpec.describe('api/v1/authors', type: :request) do
 
       response '204', 'author deleted' do
         let(:id) { create(:author).id }
-        run_test!
+        run_test! do |response|
+          expect(response.status).to eq(204)
+          expect(response.body).to be_empty
+        end
       end
 
       response '404', 'author not found' do
         let(:id) { 'invalid' }
-        run_test!
+        run_test! do |response|
+          expect(response.status).to eq(404)
+        end
       end
     end
   end
