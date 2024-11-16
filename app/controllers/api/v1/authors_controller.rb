@@ -29,7 +29,7 @@ class Api::V1::AuthorsController < Api::V1::ApplicationController
     author = Author.find(params[:id])
     author.destroy
 
-    head :no_content
+    respond_with author, serializer: AuthorSerializer
   end
 
   private

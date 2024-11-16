@@ -29,7 +29,7 @@ class Api::V1::CompetencesController < Api::V1::ApplicationController
     competence = Competence.find(params[:id])
     competence.destroy
 
-    head :no_content
+    respond_with competence, serializer: CompetenceSerializer
   end
 
   private

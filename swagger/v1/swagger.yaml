@@ -84,7 +84,9 @@ paths:
       - Authors
       responses:
         '204':
-          description: author deleted
+          description: delete author
+        '422':
+          description: try delete last author
         '404':
           description: author not found
   "/api/v1/competences":
