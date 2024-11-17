@@ -1,6 +1,9 @@
 class Api::V1::AuthorsController < Api::V1::ApplicationController
   def index
-    authors = Author.all
+    authors = Author.includes(courses: :competences)
+      .ransack(params[:q])
+      .result
+      .distinct
 
     respond_with authors, each_serializer: AuthorSerializer
   end

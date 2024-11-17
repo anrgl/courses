@@ -7,6 +7,7 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'responders', '~> 3.1', '>= 3.1.1'
 # gem "bcrypt", "~> 3.1.7"
 gem 'bootsnap', require: false
+gem 'ransack', '~> 4.2', '>= 4.2.1'
 gem 'rswag-api'
 gem 'rswag-ui'
 
