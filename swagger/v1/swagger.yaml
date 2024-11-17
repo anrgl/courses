@@ -1,0 +1,314 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/authors":
+    get:
+      summary: Retrieves all authors
+      tags:
+      - Authors
+      parameters:
+      - name: q
+        in: query
+        schema:
+          type: object
+          properties:
+            q[courses_competences_title_in][]:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: authors with competence
+    post:
+      summary: Creates an author
+      tags:
+      - Authors
+      parameters: []
+      responses:
+        '201':
+          description: author created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+  "/api/v1/authors/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Retrieves an author
+      tags:
+      - Authors
+      responses:
+        '200':
+          description: author found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Author"
+        '404':
+          description: author not found
+    put:
+      summary: Updates an author
+      tags:
+      - Authors
+      parameters: []
+      responses:
+        '200':
+          description: author updated
+        '404':
+          description: author not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+    delete:
+      summary: Deletes an author
+      tags:
+      - Authors
+      responses:
+        '204':
+          description: delete author
+        '422':
+          description: try delete last author
+        '404':
+          description: author not found
+  "/api/v1/competences":
+    get:
+      summary: Retrieves all competences
+      tags:
+      - Competences
+      responses:
+        '200':
+          description: competences found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Competence"
+    post:
+      summary: Creates an competence
+      tags:
+      - Competences
+      parameters: []
+      responses:
+        '201':
+          description: competence created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+              required:
+              - title
+  "/api/v1/competences/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Retrieves an competence
+      tags:
+      - Competences
+      responses:
+        '200':
+          description: competence found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Competence"
+        '404':
+          description: competence not found
+    put:
+      summary: Updates an competence
+      tags:
+      - Competences
+      parameters: []
+      responses:
+        '200':
+          description: competence updated
+        '404':
+          description: competence not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+              required:
+              - title
+    delete:
+      summary: Deletes an competence
+      tags:
+      - Competences
+      responses:
+        '204':
+          description: competence deleted
+        '404':
+          description: competence not found
+  "/api/v1/courses":
+    get:
+      summary: Retrieves all courses
+      tags:
+      - Courses
+      responses:
+        '200':
+          description: courses found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Course"
+    post:
+      summary: Creates an course
+      tags:
+      - Courses
+      parameters: []
+      responses:
+        '201':
+          description: course created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                course:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    author_id:
+                      type: integer
+                    competences:
+                      type: array
+                      items:
+                        type: string
+                  required:
+                  - title
+                  - author_id
+              required:
+              - course
+  "/api/v1/courses/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Retrieves an course
+      tags:
+      - Courses
+      responses:
+        '200':
+          description: course found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Course"
+        '404':
+          description: course not found
+    put:
+      summary: Updates an course
+      tags:
+      - Courses
+      parameters: []
+      responses:
+        '200':
+          description: course updated
+        '404':
+          description: course not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                author_id:
+                  type: integer
+              required:
+              - title
+    delete:
+      summary: Deletes an course
+      tags:
+      - Courses
+      responses:
+        '204':
+          description: course deleted
+        '404':
+          description: course not found
+components:
+  schemas:
+    Author:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+      - id
+      - name
+    Course:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        author_id:
+          type: integer
+        competences:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - title
+      - author_id
+    Competence:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+      required:
+      - id
+      - title
