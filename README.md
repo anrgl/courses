@@ -2,7 +2,9 @@
 
 ## Настройка проекта
 - `make build` 
-- `make prepare`
+- `make bash`
+- `bundle install`
+- `rails db:drop db:create db:migrate db:seed`
 
 ## Запуск проекта
 - `make app`
