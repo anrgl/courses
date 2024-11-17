@@ -1,15 +1,40 @@
+
+![ci badge](https://github.com/anrgl/courses/actions/workflows/ci.yml/badge.svg)
 # Courses - прототип API приложения онлайн курсов
 
+## Стек
+- Ruby 3.3
+- Ruby on rails 7.2
+- PostgreSQL 16
+- Docker
+    
+
 ## Настройка проекта
-- `make build` 
-- `make bash`
-- `bundle install`
-- `rails db:drop db:create db:migrate db:seed`
+```bash
+make build
+```
+```bash
+make bash
+```
+```bash
+bundle install
+```
+```bash
+rails db:drop db:create db:migrate db:seed
+```
 
 ## Запуск проекта
-- `make app`
+```bash
+make app
+```
 
 ## Тестирование
-- `make rswag`
-- API docs по адресу http://localhost:3000/api-docs
-- `make test`
+```bash
+make rswag
+```
+
+API docs по адресу http://localhost:3000/api-docs
+
+```bash
+make test
+```
