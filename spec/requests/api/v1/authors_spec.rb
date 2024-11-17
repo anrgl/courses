@@ -4,19 +4,44 @@ RSpec.describe('api/v1/authors', type: :request) do
   path '/api/v1/authors' do
     get 'Retrieves all authors' do
       tags 'Authors'
-      produces 'application/json'
+      consumes 'application/json'
+      parameter name: :q, in: :query, schema: {
+        type: :object,
+        properties: {
+          'q[courses_competences_title_in][]': {
+            type: :array,
+            items: { type: :string },
+          }
+        }
+      }
 
-      response '200', 'authors found' do
-        schema type: :array,
-               items: { '$ref' => '#/components/schemas/Author' }
+      response '200', 'all authors found' do
+        # schema type: :array,
+        #        items: { '$ref' => '#/components/schemas/Author' }
 
         before do
           create_list(:author, 5)
         end
 
+        let(:q) { { 'q[courses_competences_title_in][]': '' } }
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data.count).to eq(5)
+        end
+      end
+
+      response '200', 'authors with competence' do
+        before do
+          competence1 = create(:competence, title: 'ruby')
+          competence2 = create(:competence, title: 'java')
+          create(:course, competences: [ competence1 ])
+          create(:course, competences: [ competence2 ])
+        end
+
+        let(:q) { { 'q[courses_competences_title_in][]': 'ruby' } }
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data.count).to eq(1)
         end
       end
     end

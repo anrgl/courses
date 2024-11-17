@@ -9,15 +9,19 @@ paths:
       summary: Retrieves all authors
       tags:
       - Authors
+      parameters:
+      - name: q
+        in: query
+        schema:
+          type: object
+          properties:
+            q[courses_competences_title_in][]:
+              type: array
+              items:
+                type: string
       responses:
         '200':
-          description: authors found
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/Author"
+          description: authors with competence
     post:
       summary: Creates an author
       tags:

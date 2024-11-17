@@ -1,4 +1,6 @@
 class Author < ApplicationRecord
+  include AuthorRansacker
+
   has_many :courses
 
   validates :name, presence: true

@@ -13,8 +13,10 @@ rubocop:
 rswag:
 	docker-compose run --rm web rails rswag
 
-tests:
+test:
 	docker-compose run --rm web rails spec
 
 console:
 	docker-compose run --rm web rails c
+
+.PHONY: app test
