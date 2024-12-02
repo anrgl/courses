@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 7.2.2'
 gem 'pg', '~> 1.1'
 gem 'puma', '>= 5.0'
-gem 'active_model_serializers', '~> 0.10.0'
+gem 'active_model_serializers', '~> 0.10.15'
 gem 'responders', '~> 3.1', '>= 3.1.1'
 # gem "bcrypt", "~> 3.1.7"
 gem 'bootsnap', require: false
